@@ -154,4 +154,45 @@
   <script src="./JS/contact_lang.js"></script>
   <!-- Form Validation JS -->
   <script src="./JS/contact_main.js"></script>
+
+  <!-- ✅ JS Validation -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("contactForm");
+      const alertBox = document.getElementById("alertBox");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const message = document.getElementById("message").value.trim();
+
+        if (!name || !email || !message) {
+          showAlert("الرجاء تعبئة جميع الحقول المطلوبة.", "danger");
+          return;
+        }
+
+        const emailPattern = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+        if (!emailPattern.test(email)) {
+          showAlert("الرجاء إدخال بريد إلكتروني صحيح.", "danger");
+          return;
+        }
+
+        showAlert("تم إرسال الرسالة بنجاح ✅ سنعاود التواصل معك قريبًا.", "success");
+        form.reset();
+      });
+
+      function showAlert(message, type) {
+        alertBox.innerHTML = `
+          <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        `;
+      }
+    });
+  </script>
+  <!-- ✅ End -->
 </body>
+</html>
