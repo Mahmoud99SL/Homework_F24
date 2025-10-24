@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="page.title">تفاصيل الفعالية | دليل فعاليات المدينة</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="./CSS/style.css" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <!-- Language Switcher Styles -->
+    <style>
+        .language-switcher {
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            overflow: hidden;
+            background: white;
+        }
+        .lang-btn {
+            border: none !important;
+            border-radius: 0 !important;
+            padding: 8px 12px !important;
+            background: white !important;
+            color: #495057 !important;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .lang-btn:hover {
+            background: #f8f9fa !important;
+            color: #007bff !important;
+        }
+        .lang-btn.active {
+            background: #007bff !important;
+            color: white !important;
+        }
+        .lang-btn .flag {
+            font-size: 16px;
+        }
+        
+        /* Event Details Styles */
+        .event-hero {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            min-height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+        .event-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.4);
+        }
+        .event-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        .event-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 3;
+        }
+        .event-info-card {
+            margin-top: -80px;
+            position: relative;
+            z-index: 10;
+        }
+        .event-image {
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .info-item i {
+            width: 20px;
+            margin-left: 10px;
+            color: #28a745;
+        }
+        .lang-en .info-item i {
+            margin-right: 10px;
+            margin-left: 0;
+        }
+        .action-buttons {
+            gap: 15px;
+        }
+        .action-buttons .btn {
+            flex: 1;
+            padding: 12px 20px;
+            font-weight: 600;
+            border-radius: 8px;
+        }
+        .map-container {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .related-event-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .related-event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .social-share {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .share-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        .share-btn:hover {
+            transform: scale(1.1);
+        }
+        .share-btn.facebook { background: #3b5998; color: white; }
+        .share-btn.twitter { background: #1da1f2; color: white; }
+        .share-btn.whatsapp { background: #25d366; color: white; }
+        .share-btn.copy { background: #6c757d; color: white; }
+        
+        body {
+            transition: direction 0.3s ease;
+        }
+        
+        .bi {
+            display: inline-block;
+            vertical-align: middle;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-success d-flex align-items-center" href="index.html">
+                <img src="./img/logo.png" alt="Logo" width="60" height="60" class="me-2">
+                <span id="navbar-brand">دليل فعاليات المدينة</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="index.html" data-i18n="nav.home">الصفحة الرئيسية</a></li>
+                    <li class="nav-item"><a class="nav-link" href="events.html" data-i18n="nav.events">الفعاليات</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html" data-i18n="nav.about">عن الدليل</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html" data-i18n="nav.contact">اتصل بنا</a></li>
+                    <li class="nav-item">
+                        <div class="language-switcher d-flex">
+                            <button class="lang-btn active" onclick="switchLanguage('ar')">
+                                <span class="flag">🇸🇾</span> العربية
+                            </button>
+                            <button class="lang-btn" onclick="switchLanguage('en')">
+                                <span class="flag">🇺🇸</span> English
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Event Hero Section -->
+    <section class="event-hero position-relative">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-lg-8">
+                    <div class="event-hero-content text-white">
+                        <div class="event-badge">
+                            <span class="badge bg-warning fs-6 px-3 py-2" id="event-category">موسيقي</span>
+                        </div>
+                        <h1 class="display-4 fw-bold mb-3" id="event-title">ليالي أوبرا دمشق</h1>
+                        <p class="lead mb-4" id="event-subtitle">عروض مباشرة لأفضل الفرق الموسيقية العربية والعالمية</p>
+                        
+                        <!-- Quick Info -->
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="d-flex align-items-center text-white-50">
+                                    <i class="bi bi-calendar-event fs-4 me-2"></i>
+                                    <div>
+                                        <small data-i18n="event.detail.date">التاريخ</small>
+                                        <div id="event-date" class="fw-semibold">30 سبتمبر 2025</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="d-flex align-items-center text-white-50">
+                                    <i class="bi bi-geo-alt fs-4 me-2"></i>
+                                    <div>
+                                        <small data-i18n="event.detail.location">المكان</small>
+                                        <div id="event-location" class="fw-semibold">أوبرا دمشق</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="d-flex align-items-center text-white-50">
+                                    <i class="bi bi-clock fs-4 me-2"></i>
+                                    <div>
+                                        <small data-i18n="event.detail.time">الوقت</small>
+                                        <div id="event-time" class="fw-semibold">19:30 - 22:00</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Details -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Main Content -->
+                <div class="col-lg-8">
+                    <!-- Event Image -->
+                    <div class="mb-4">
+                        <img id="event-main-image" src="./img/main2.jpeg" alt="صورة الفعالية" class="img-fluid event-image w-100">
+                    </div>
+
+                    <!-- Description -->
+                    <div class="card border-0 shadow-sm rounded-4 mb-4">
+                        <div class="card-body p-4">
+                            <h3 class="card-title mb-3" data-i18n="event.detail.description">وصف الفعالية</h3>
+                            <p class="card-text" id="event-description">
+                                انضموا إلينا في أمسيات موسيقية استثنائية في أجمل مسارح دمشق. ستشهد هذه الفعالية عروضاً مبهرة من قبل نخبة من أفضل الفنانين والموسيقيين العرب والعالميين، مع برنامج غني ومتنوع يضم روائع الموسيقى الكلاسيكية والمعاصرة.
+                            </p>
+                            <p class="card-text">
+                                سيتضمن البرنامج قطعاً موسيقية من التراث العربي الأصيل بالإضافة إلى أعمال كلاسيكية عالمية، مما يجعلها مناسبة لجميع الأذواق والأعمار. ستكون هذه فرصة فريدة للاستمتاع بتجربة موسيقية راقية في أجواء رومانسية بداخل أوبرا دمشق التاريخية.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Location Map -->
+                    <div class="card border-0 shadow-sm rounded-4 mb-4">
+                        <div class="card-body p-4">
+                            <h3 class="card-title mb-3" data-i18n="event.detail.location_map">الموقع على الخريطة</h3>
+                            <div class="map-container">
+                                <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800&h=400&fit=crop" alt="خريطة الموقع" class="w-100">
+                            </div>
+                            <p class="text-muted mt-3">
+                                <i class="bi bi-geo-alt"></i> العنوان: شارع المدينة، دمشق، سوريا
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <!-- Action Buttons -->
+                    <div class="card border-0 shadow-sm rounded-4 mb-4">
+                        <div class="card-body p-4">
+                            <h4 class="card-title mb-3" data-i18n="event.detail.actions">إجراءات</h4>
+                            <div class="d-grid gap-2 action-buttons">
+                                <button class="btn btn-success btn-lg" onclick="addToCalendar()">
+                                    <i class="bi bi-calendar-plus"></i>
+                                    <span data-i18n="event.detail.add_calendar">إضافة للتقويم</span>
+                                </button>
+                                <div class="social-share">
+                                    <span class="text-muted small me-2" data-i18n="event.detail.share">مشاركة:</span>
+                                    <button class="share-btn facebook" onclick="shareFacebook()">
+                                        <i class="bi bi-facebook"></i>
+                                    </button>
+                                    <button class="share-btn twitter" onclick="shareTwitter()">
+                                        <i class="bi bi-twitter"></i>
+                                    </button>
+                                    <button class="share-btn whatsapp" onclick="shareWhatsApp()">
+                                        <i class="bi bi-whatsapp"></i>
+                                    </button>
+                                    <button class="share-btn copy" onclick="copyLink()">
+                                        <i class="bi bi-link-45deg"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Event Info -->
+                    <div class="card border-0 shadow-sm rounded-4 mb-4">
+                        <div class="card-body p-4">
+                            <h4 class="card-title mb-3" data-i18n="event.detail.info">معلومات الفعالية</h4>
+                            <div class="info-item">
+                                <i class="bi bi-calendar-event"></i>
+                                <div>
+                                    <small class="text-muted" data-i18n="event.detail.date">التاريخ</small>
+                                    <div class="fw-semibold">30 سبتمبر 2025</div>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="bi bi-clock"></i>
+                                <div>
+                                    <small class="text-muted" data-i18n="event.detail.time">الوقت</small>
+                                    <div class="fw-semibold">19:30 - 22:00</div>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="bi bi-geo-alt"></i>
+                                <div>
+                                    <small class="text-muted" data-i18n="event.detail.location">المكان</small>
+                                    <div class="fw-semibold">أوبرا دمشق</div>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="bi bi-ticket-perforated"></i>
+                                <div>
+                                    <small class="text-muted" data-i18n="event.detail.price">سعر التذكرة</small>
+                                    <div class="fw-semibold">50,000 - 200,000 ل.س</div>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="bi bi-person-check"></i>
+                                <div>
+                                    <small class="text-muted" data-i18n="event.detail.organizer">المنظم</small>
+                                    <div class="fw-semibold">مديرية الثقافة - دمشق</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Events -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h3 class="text-center mb-5" data-i18n="event.detail.related_events">فعاليات ذات صلة</h3>
+            <div class="row g-4" id="related-events-container">
+                <!-- Related events will be loaded dynamically -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card related-event-card h-100">
+                        <img src="img\معرض الكتاب.webp" class="card-img-top" alt="معرض الكتاب">
+                        <div class="card-body">
+                            <span class="badge bg-warning mb-2" id="related-event-1-category">ثقافي</span>
+                            <h6 class="card-title" id="related-event-1-title">معرض الكتاب</h6>
+                            <p class="card-text small text-muted" id="related-event-1-date">2 أكتوبر 2025</p>
+                            <a href="event.html?id=2" class="btn btn-outline-success btn-sm" data-i18n="event.detail.view_details">عرض التفاصيل</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card related-event-card h-100">
+                        <img src="img\ملعب تشرين.webp" class="card-img-top" alt="بطولة رياضية">
+                        <div class="card-body">
+                            <span class="badge bg-danger mb-2" id="related-event-2-category">رياضي</span>
+                            <h6 class="card-title" id="related-event-2-title">بطولة المدينة الرياضية</h6>
+                            <p class="card-text small text-muted" id="related-event-2-date">28 سبتمبر 2025</p>
+                            <a href="event.html?id=3" class="btn btn-outline-success btn-sm" data-i18n="event.detail.view_details">عرض التفاصيل</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card related-event-card h-100">
+                        <img src="img\حديقة تشرين.webp" class="card-img-top" alt="مهرجان العائلة">
+                        <div class="card-body">
+                            <span class="badge bg-success mb-2" id="related-event-3-category">عائلي</span>
+                            <h6 class="card-title" id="related-event-3-title">مهرجان العائلة</h6>
+                            <p class="card-text small text-muted" id="related-event-3-date">5 أكتوبر 2025</p>
+                            <a href="event.html?id=4" class="btn btn-outline-success btn-sm" data-i18n="event.detail.view_details">عرض التفاصيل</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card related-event-card h-100">
+                        <img src="./img/main2.jpeg" class="card-img-top" alt="حفلة موسيقية">
+                        <div class="card-body">
+                            <span class="badge bg-primary mb-2" id="related-event-4-category">موسيقي</span>
+                            <h6 class="card-title" id="related-event-4-title">ليالي أوبرا دمشق</h6>
+                            <p class="card-text small text-muted" id="related-event-4-date">30 سبتمبر 2025</p>
+                            <a href="event.html?id=1" class="btn btn-outline-success btn-sm" data-i18n="event.detail.view_details">عرض التفاصيل</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5 bg-light mt-auto">
+        <div class="container">
+            <div class="row flex-row-reverse">
+                <div class="row">
+                    <div class="col-md-3 text-center text-md-start mb-4 mb-md-0">
+                        <img src="./img/logo.png" alt="Logo" width="60" class="mb-2">
+                        <h5 class="fw-bold">دليل فعاليات المدينة</h5>
+                    </div>
+                    <div class="col-md-3 mb-4 mb-md-0">
+                        <h6 class="fw-bold mb-3" data-i18n="footer.links">روابط سريعة</h6>
+                        <ul class="list-unstyled">
+                            <li><a href="index.html" data-i18n="nav.home_sm">الصفحة الرئيسية</a></li>
+                            <li><a href="events.html" data-i18n="nav.events_sm">الفعاليات</a></li>
+                            <li><a href="about.html" data-i18n="nav.about_sm">عن الدليل</a></li>
+                            <li><a href="contact.html" data-i18n="nav.contact_sm">اتصل بنا</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 mb-4 mb-md-0">
+                        <h6 class="fw-bold mb-3" data-i18n="footer.contact_title">معلومات التواصل</h6>
+                        <ul class="list-unstyled">
+                            <li>📞 +963 333 333 333</li>
+                            <li>✉️ info@cityevents.com</li>
+                            <li>📍 دمشق، سوريا</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h6 class="fw-bold mb-3" data-i18n="footer.follow">تابعنا</h6>
+                        <a href="#" class="me-2"><img src="img\فيس.webp" alt="Facebook" width="32"/></a>
+                        <a href="#" class="me-2"><img src="img\انستا.webp" alt="Instagram" width="32"/></a>
+                        <a href="#" class="me-2"><img src="img\تنزيل (1).webp" alt="Twitter" width="32"/></a>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <small data-i18n="footer.copy">© دليل فعاليات المدينة. جميع الحقوق محفوظة.</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Language Switcher Script -->
+    <script>
+    // نظام الترجمة المتقدم
+    class TranslationSystem {
+        constructor() {
+            this.currentLanguage = localStorage.getItem('language') || 'ar';
+            this.translations = {
+                ar: {
+                    // Navigation
+                    "nav.home": "الصفحة الرئيسية",
+                    "nav.events": "الفعاليات",
+                    "nav.about": "عن الدليل",
+                    "nav.contact": "اتصل بنا",
+                    
+                    // Event Details
+                    "event.detail.date": "التاريخ",
+                    "event.detail.time": "الوقت",
+                    "event.detail.location": "المكان",
+                    "event.detail.description": "وصف الفعالية",
+                    "event.detail.location_map": "الموقع على الخريطة",
+                    "event.detail.actions": "إجراءات",
+                    "event.detail.add_calendar": "إضافة للتقويم",
+                    "event.detail.share": "مشاركة",
+                    "event.detail.info": "معلومات الفعالية",
+                    "event.detail.price": "سعر التذكرة",
+                    "event.detail.organizer": "المنظم",
+                    "event.detail.related_events": "فعاليات ذات صلة",
+                    "event.detail.view_details": "عرض التفاصيل",
+                    
+                    // Footer
+                    "footer.links": "روابط سريعة",
+                    "footer.contact_title": "معلومات التواصل",
+                    "footer.follow": "تابعنا",
+                    "footer.copy": "© دليل فعاليات المدينة. جميع الحقوق محفوظة.",
+                    
+                    // Navigation small
+                    "nav.home_sm": "الصفحة الرئيسية",
+                    "nav.events_sm": "الفعاليات",
+                    "nav.about_sm": "عن الدليل",
+                    "nav.contact_sm": "اتصل بنا",
+                    
+                    // Page title
+                    "page.title": "تفاصيل الفعالية | دليل فعاليات المدينة",
+                    
+                    // Navbar brand
+                    "brand.name": "دليل فعاليات المدينة"
+                },
+                en: {
+                    // Navigation
+                    "nav.home": "Home",
+                    "nav.events": "Events",
+                    "nav.about": "About",
+                    "nav.contact": "Contact",
+                    
+                    // Event Details
+                    "event.detail.date": "Date",
+                    "event.detail.time": "Time",
+                    "event.detail.location": "Location",
+                    "event.detail.description": "Event Description",
+                    "event.detail.location_map": "Location on Map",
+                    "event.detail.actions": "Actions",
+                    "event.detail.add_calendar": "Add to Calendar",
+                    "event.detail.share": "Share",
+                    "event.detail.info": "Event Information",
+                    "event.detail.price": "Ticket Price",
+                    "event.detail.organizer": "Organizer",
+                    "event.detail.related_events": "Related Events",
+                    "event.detail.view_details": "View Details",
+                    
+                    // Footer
+                    "footer.links": "Quick Links",
+                    "footer.contact_title": "Contact Information",
+                    "footer.follow": "Follow Us",
+                    "footer.copy": "© City Events Guide. All rights reserved.",
+                    
+                    // Navigation small
+                    "nav.home_sm": "Home",
+                    "nav.events_sm": "Events",
+                    "nav.about_sm": "About",
+                    "nav.contact_sm": "Contact",
+                    
+                    // Page title
+                    "page.title": "Event Details | City Events Guide",
+                    
+                    // Navbar brand
+                    "brand.name": "City Events Guide"
+                }
+            };
+            
+            this.init();
+        }
+        
+        init() {
+            this.applyLanguage();
+            this.updateLanguageButtons();
+        }
+        
+        switchLanguage(lang) {
+            this.currentLanguage = lang;
+            localStorage.setItem('language', lang);
+            this.applyLanguage();
+            this.updateLanguageButtons();
+        }
+        
+        applyLanguage() {
+            const html = document.documentElement;
+            const body = document.body;
+            
+            // Set language and direction
+            html.setAttribute('lang', this.currentLanguage);
+            body.className = body.className.replace(/lang-\w+/g, '');
+            body.classList.add(`lang-${this.currentLanguage}`);
+            
+            // Set direction
+            if (this.currentLanguage === 'ar') {
+                html.setAttribute('dir', 'rtl');
+                body.style.direction = 'rtl';
+            } else {
+                html.setAttribute('dir', 'ltr');
+                body.style.direction = 'ltr';
+            }
+            
+            // Apply translations
+            this.updateTranslations();
+            
+            // Update event-specific content
+            this.updateEventContent();
+        }
+        
+        updateEventContent() {
+            // Update navbar brand
+            const brandElement = document.getElementById('navbar-brand');
+            if (brandElement) {
+                brandElement.textContent = this.translations[this.currentLanguage]['brand.name'];
+            }
+            
+            // Update page title
+            const titleElement = document.querySelector('title[data-i18n]');
+            if (titleElement) {
+                const titleKey = titleElement.getAttribute('data-i18n');
+                const titleTranslation = this.translations[this.currentLanguage][titleKey];
+                if (titleTranslation) {
+                    titleElement.textContent = titleTranslation;
+                }
+            }
+            
+            // Get current event ID
+            const urlParams = new URLSearchParams(window.location.search);
+            const eventId = urlParams.get('id');
+            
+            if (eventId) {
+                loadEventData(eventId);
+            }
+            
+            // Update related events
+            updateRelatedEvents();
+        }
+        
+        updateTranslations() {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                const translation = this.translations[this.currentLanguage][key];
+                
+                if (translation) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        const placeholderKey = element.getAttribute('data-i18n-placeholder');
+                        if (placeholderKey && this.translations[this.currentLanguage][placeholderKey]) {
+                            element.setAttribute('placeholder', this.translations[this.currentLanguage][placeholderKey]);
+                        }
+                    } else {
+                        element.textContent = translation;
+                    }
+                }
+            });
+        }
+        
+        updateLanguageButtons() {
+            const buttons = document.querySelectorAll('.lang-btn');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+                if (button.textContent.includes('العربية') || button.textContent.includes('Arabic')) {
+                    if (this.currentLanguage === 'ar') {
+                        button.classList.add('active');
+                    }
+                } else {
+                    if (this.currentLanguage === 'en') {
+                        button.classList.add('active');
+                    }
+                }
+            });
+        }
+    }
+
+    // Global functions
+    function switchLanguage(lang) {
+        if (window.translationSystem) {
+            window.translationSystem.switchLanguage(lang);
+        } else {
+            window.translationSystem = new TranslationSystem();
+            window.translationSystem.switchLanguage(lang);
+        }
+    }
+
+    // Event specific functions
+    function addToCalendar() {
+        const eventTitle = document.getElementById('event-title').textContent;
+        const eventDate = '20250930T193000Z'; // ISO format
+        const eventLocation = 'أوبرا دمشق';
+        
+        const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${eventDate}&details=${encodeURIComponent('فعالية موسيقية في أوبرا دمشق')}&location=${encodeURIComponent(eventLocation)}`;
+        
+        window.open(calendarUrl, '_blank');
+    }
+
+    function shareFacebook() {
+        const url = window.location.href;
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+    }
+
+    function shareTwitter() {
+        const url = window.location.href;
+        const text = document.getElementById('event-title').textContent;
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+    }
+
+    function shareWhatsApp() {
+        const url = window.location.href;
+        const text = document.getElementById('event-title').textContent;
+        window.open(`https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`, '_blank');
+    }
+
+    function copyLink() {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            const currentLang = window.translationSystem ? window.translationSystem.currentLanguage : 'ar';
+            const message = currentLang === 'ar' ? 'تم نسخ الرابط!' : 'Link copied!';
+            alert(message);
+        });
+    }
+
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        window.translationSystem = new TranslationSystem();
+        
+        // Get event ID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id');
+        
+        // Load event data based on ID (this would normally come from an API)
+        if (eventId) {
+            loadEventData(eventId);
+        }
+    });
+
+    function loadEventData(eventId) {
+        // Bilingual events data structure
+        const events = {
+            '1': {
+                ar: {
+                    title: 'ليالي أوبرا دمشق',
+                    category: 'موسيقي',
+                    subtitle: 'عروض مباشرة لأفضل الفرق الموسيقية العربية والعالمية',
+                    date: '30 سبتمبر 2025',
+                    location: 'أوبرا دمشق',
+                    time: '19:30 - 22:00',
+                    price: '50,000 - 200,000 ل.س',
+                    organizer: 'مديرية الثقافة - دمشق',
+                    description: 'انضموا إلينا في أمسيات موسيقية استثنائية في أجمل مسارح دمشق. ستشهد هذه الفعالية عروضاً مبهرة من قبل نخبة من أفضل الفنانين والموسيقيين العرب والعالميين، مع برنامج غني ومتنوع يضم روائع الموسيقى الكلاسيكية والمعاصرة.',
+                    description2: 'سيتضمن البرنامج قطعاً موسيقية من التراث العربي الأصيل بالإضافة إلى أعمال كلاسيكية عالمية، مما يجعلها مناسبة لجميع الأذواق والأعمار. ستكون هذه فرصة فريدة للاستمتاع بتجربة موسيقية راقية في أجواء رومانسية بداخل أوبرا دمشق التاريخية.',
+                    address: 'العنوان: شارع المدينة، دمشق، سوريا',
+                    mapAlt: 'خريطة الموقع',
+                    imageAlt: 'صورة الفعالية'
+                },
+                en: {
+                    title: 'Damascus Opera Nights',
+                    category: 'Musical',
+                    subtitle: 'Live performances by the best Arab and international musical ensembles',
+                    date: 'September 30, 2025',
+                    location: 'Damascus Opera',
+                    time: '7:30 PM - 10:00 PM',
+                    price: '50,000 - 200,000 SYP',
+                    organizer: 'Damascus Culture Directorate',
+                    description: 'Join us for exceptional musical evenings at Damascus most beautiful theaters. This event will feature stunning performances by a selection of the best Arab and international artists and musicians, with a rich and diverse program featuring masterpieces of classical and contemporary music.',
+                    description2: 'The program will include musical pieces from authentic Arab heritage in addition to world classical works, making it suitable for all tastes and ages. This will be a unique opportunity to enjoy a sophisticated musical experience in a romantic atmosphere inside the historic Damascus Opera.',
+                    address: 'Address: Al-Madina Street, Damascus, Syria',
+                    mapAlt: 'Location Map',
+                    imageAlt: 'Event Image'
+                }
+            },
+            '2': {
+                ar: {
+                    title: 'معرض الكتاب',
+                    category: 'ثقافي',
+                    subtitle: 'أحدث الكتب من دور النشر المحلية والعالمية',
+                    date: '2 أكتوبر 2025',
+                    location: 'مكتبة دمشق',
+                    time: '10:00 - 20:00',
+                    price: 'مجاني',
+                    organizer: 'مكتبة دمشق الوطنية',
+                    description: 'اكتشف أحدث الكتب والقصص من مختلف دور النشر المحلية والعالمية في معرض الكتاب السنوي. يضم المعرض كتباً في جميع المجالات الأدبية والعلمية والتاريخية، بالإضافة إلى أنشطة ثقافية متنوعة.',
+                    description2: 'سيتضمن المعرض ورش عمل للأدباء والكتاب، وندوات ثقافية، ومسابقات في القراءة للأطفال والكبار. فرصة ذهبية للتعرف على الكتاب المبدعين واكتشاف أعمال جديدة تثري مكتبتك المنزلية.',
+                    address: 'العنوان: ساحة الأمويين، دمشق، سوريا',
+                    mapAlt: 'خريطة المعرض',
+                    imageAlt: 'صورة معرض الكتاب'
+                },
+                en: {
+                    title: 'Book Fair',
+                    category: 'Cultural',
+                    subtitle: 'Latest books from local and international publishing houses',
+                    date: 'October 2, 2025',
+                    location: 'Damascus Library',
+                    time: '10:00 AM - 8:00 PM',
+                    price: 'Free',
+                    organizer: 'Damascus National Library',
+                    description: 'Discover the latest books and stories from various local and international publishing houses at the annual book fair. The fair includes books in all literary, scientific and historical fields, in addition to various cultural activities.',
+                    description2: 'The fair will feature workshops with writers and authors, cultural seminars, and reading competitions for children and adults. A golden opportunity to meet creative writers and discover new works to enrich your home library.',
+                    address: 'Address: Umayyad Square, Damascus, Syria',
+                    mapAlt: 'Fair Map',
+                    imageAlt: 'Book Fair Image'
+                }
+            },
+            '3': {
+                ar: {
+                    title: 'بطولة المدينة الرياضية',
+                    category: 'رياضي',
+                    subtitle: 'منافسات رياضية حماسية لجميع الأعمار',
+                    date: '28 سبتمبر 2025',
+                    location: 'ملعب المدينة',
+                    time: '08:00 - 18:00',
+                    price: '25,000 - 50,000 ل.س',
+                    organizer: 'الاتحاد الرياضي السوري',
+                    description: 'انضموا إلى منافسات رياضية حماسية في ملعب المدينة مع فرق من مختلف أنحاء البلاد. ستشمل البطولة كرة القدم، كرة السلة، كرة الطائرة، وألعاب القوى.',
+                    description2: 'جوائز قيمة للفرق الفائزة، وألعاب ترفيهية للعائلات، ومسابقات مهارية للشباب. مناسبة مثالية للترويج للرياضة ونمط حياة صحي في مجتمعنا.',
+                    address: 'العنوان: شارع الثورة، دمشق، سوريا',
+                    mapAlt: 'خريطة الملعب',
+                    imageAlt: 'صورة البطولة الرياضية'
+                },
+                en: {
+                    title: 'City Sports Championship',
+                    category: 'Sports',
+                    subtitle: 'Exciting sports competitions for all ages',
+                    date: 'September 28, 2025',
+                    location: 'City Stadium',
+                    time: '8:00 AM - 6:00 PM',
+                    price: '25,000 - 50,000 SYP',
+                    organizer: 'Syrian Sports Federation',
+                    description: 'Join exciting sports competitions at the city stadium with teams from various parts of the country. The championship will include football, basketball, volleyball, and athletics.',
+                    description2: 'Valuable prizes for winning teams, entertainment games for families, and skill competitions for youth. An ideal opportunity to promote sports and a healthy lifestyle in our community.',
+                    address: 'Address: Al-Thawra Street, Damascus, Syria',
+                    mapAlt: 'Stadium Map',
+                    imageAlt: 'Sports Championship Image'
+                }
+            },
+            '4': {
+                ar: {
+                    title: 'مهرجان العائلة',
+                    category: 'عائلي',
+                    subtitle: 'فعاليات ممتعة للأطفال والعائلات',
+                    date: '5 أكتوبر 2025',
+                    location: 'حديقة نيسان',
+                    time: '15:00 - 22:00',
+                    price: 'مجاني',
+                    organizer: 'بلدية دمشق',
+                    description: 'مهرجان ترفيهي مميز للعائلات والأطفال في حديقة نيسان الجميلة. يشمل الألعاب والمسابقات والحفلات الموسيقية والعروض المسرحية المناسبة لجميع أفراد العائلة.',
+                    description2: 'ألعاب تفاعلية للأطفال، مهرجون وممثلون، ألعاب رياضية، ورش فنية وحرفية، وأكشاك طعام متنوعة. يوم مليء بالمرح والمتعة لجميع أفراد العائلة.',
+                    address: 'العنوان: حديقة نيسان، دمشق، سوريا',
+                    mapAlt: 'خريطة الحديقة',
+                    imageAlt: 'صورة مهرجان العائلة'
+                },
+                en: {
+                    title: 'Family Festival',
+                    category: 'Family',
+                    subtitle: 'Fun events for children and families',
+                    date: 'October 5, 2025',
+                    location: 'Nissan Park',
+                    time: '3:00 PM - 10:00 PM',
+                    price: 'Free',
+                    organizer: 'Damascus Municipality',
+                    description: 'A distinctive entertainment festival for families and children in the beautiful Nissan Park. It includes games, competitions, musical concerts and theatrical performances suitable for all family members.',
+                    description2: 'Interactive games for children, clowns and performers, sports games, artistic and craft workshops, and various food stalls. A day full of fun and joy for all family members.',
+                    address: 'Address: Nissan Park, Damascus, Syria',
+                    mapAlt: 'Park Map',
+                    imageAlt: 'Family Festival Image'
+                }
+            }
+        };
+        
+        const event = events[eventId];
+        if (event) {
+            // Get current language
+            const currentLang = window.translationSystem ? window.translationSystem.currentLanguage : 'ar';
+            const eventData = event[currentLang] || event['ar'];
+            
+            // Update all event content
+            document.getElementById('event-title').textContent = eventData.title;
+            document.getElementById('event-category').textContent = eventData.category;
+            document.getElementById('event-subtitle').textContent = eventData.subtitle;
+            document.getElementById('event-date').textContent = eventData.date;
+            document.getElementById('event-location').textContent = eventData.location;
+            document.getElementById('event-time').textContent = eventData.time;
+            document.getElementById('event-description').innerHTML = `${eventData.description}<br><br>${eventData.description2}`;
+            
+            // Update sidebar info
+            document.querySelector('.info-item .fw-semibold').textContent = eventData.date;
+            document.querySelectorAll('.info-item .fw-semibold')[1].textContent = eventData.time;
+            document.querySelectorAll('.info-item .fw-semibold')[2].textContent = eventData.location;
+            document.querySelectorAll('.info-item .fw-semibold')[3].textContent = eventData.price;
+            document.querySelectorAll('.info-item .fw-semibold')[4].textContent = eventData.organizer;
+            
+            // Update map and images
+            document.querySelector('.map-container + p').innerHTML = `<i class="bi bi-geo-alt"></i> ${eventData.address}`;
+            document.getElementById('event-main-image').alt = eventData.imageAlt;
+            
+            // Update page title
+            document.title = `${eventData.title} | ${currentLang === 'ar' ? 'دليل فعاليات المدينة' : 'City Events Guide'}`;
+            
+            // Update hero section content
+            updateHeroSection(eventData);
+        }
+    }
+    
+    function updateHeroSection(eventData) {
+        // Update the quick info cards in hero section
+        document.querySelectorAll('.event-hero .fw-semibold')[0].textContent = eventData.date;
+        document.querySelectorAll('.event-hero .fw-semibold')[1].textContent = eventData.location;
+        document.querySelectorAll('.event-hero .fw-semibold')[2].textContent = eventData.time;
+    }
+    
+    function updateRelatedEvents() {
+        const currentLang = window.translationSystem ? window.translationSystem.currentLanguage : 'ar';
+        
+        const relatedEventsData = {
+            '1': { // معرض الكتاب
+                ar: {
+                    title: 'معرض الكتاب',
+                    category: 'ثقافي',
+                    date: '2 أكتوبر 2025'
+                },
+                en: {
+                    title: 'Book Fair',
+                    category: 'Cultural',
+                    date: 'October 2, 2025'
+                }
+            },
+            '2': { // بطولة رياضية
+                ar: {
+                    title: 'بطولة المدينة الرياضية',
+                    category: 'رياضي',
+                    date: '28 سبتمبر 2025'
+                },
+                en: {
+                    title: 'City Sports Championship',
+                    category: 'Sports',
+                    date: 'September 28, 2025'
+                }
+            },
+            '3': { // مهرجان العائلة
+                ar: {
+                    title: 'مهرجان العائلة',
+                    category: 'عائلي',
+                    date: '5 أكتوبر 2025'
+                },
+                en: {
+                    title: 'Family Festival',
+                    category: 'Family',
+                    date: 'October 5, 2025'
+                }
+            },
+            '4': { // ليالي أوبرا دمشق
+                ar: {
+                    title: 'ليالي أوبرا دمشق',
+                    category: 'موسيقي',
+                    date: '30 سبتمبر 2025'
+                },
+                en: {
+                    title: 'Damascus Opera Nights',
+                    category: 'Musical',
+                    date: 'September 30, 2025'
+                }
+            }
+        };
+        
+        // Update each related event card
+        Object.keys(relatedEventsData).forEach((eventId, index) => {
+            const eventData = relatedEventsData[eventId][currentLang] || relatedEventsData[eventId]['ar'];
+            
+            const cardIndex = index + 1;
+            const titleElement = document.getElementById(`related-event-${cardIndex}-title`);
+            const categoryElement = document.getElementById(`related-event-${cardIndex}-category`);
+            const dateElement = document.getElementById(`related-event-${cardIndex}-date`);
+            
+            if (titleElement) titleElement.textContent = eventData.title;
+            if (categoryElement) categoryElement.textContent = eventData.category;
+            if (dateElement) dateElement.textContent = eventData.date;
+        });
+    }
+
+    // Export for global use
+    window.switchLanguage = switchLanguage;
+    </script>
+</body>
+</html>
