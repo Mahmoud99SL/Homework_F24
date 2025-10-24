@@ -1,0 +1,239 @@
+/* ================================
+   Root Variables (Theme Colors)
+   ================================ */
+:root {
+  --color-bg: #ffffff;
+  --color-text-dark: #333333;
+  --color-text-light: #f8f8f8;
+  --color-success: #198754;       /* Bootstrap success green */
+  --color-success-hover: #157347;
+  --color-success-border: #146c43;
+  --color-indigo: #6B5B95;        /* Indigo accent */
+  --color-overlay: rgba(0, 0, 0, 0.5);
+}
+
+/* ================================
+   General
+   ================================ */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  scroll-behavior: smooth;
+  background-color: var(--color-bg);
+  color: var(--color-text-dark);
+  direction: rtl;
+}
+
+/* ================================
+   Hero Section
+   ================================ */
+.hero-section {
+  background: url("../img/mainphoto.jpeg") center/cover no-repeat;
+  height: 100vh;
+  position: relative;
+}
+
+.hero-section::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: var(--color-overlay);
+}
+
+.hero-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* ================================
+   About Section
+   ================================ */
+#about h2 {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* ================================
+   Photo Box
+   ================================ */
+.photo-box {
+  position: relative;
+  display: inline-block;
+}
+.photo-box img {
+  max-width: 100%;
+  border-radius: 15px;
+}
+
+/* ================================
+   Categories Section
+   ================================ */
+#categories .btn-outline-primary {
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+#categories .btn-outline-primary:hover {
+  background-color: var(--color-success);
+  color: var(--color-text-light);
+}
+
+/* ================================
+   Cards Section
+   ================================ */
+.cards .section-title {
+  color: var(--color-text-dark);
+}
+
+.cards .card-title {
+  font-weight: bold;
+  color: var(--color-indigo);
+}
+
+.cards .card-text {
+  font-size: 0.95rem;
+  color: var(--color-text-dark);
+}
+
+.cards .btn-success {
+  background-color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.cards .btn-success:hover {
+  background-color: var(--color-success-hover);
+  border-color: var(--color-success-border);
+}
+
+.cards .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cards .card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+/*Footer - Dark mode*/
+#mode-toggle {
+  bottom: 20px;
+  left: 20px;
+  z-index: 1050;
+  border-radius: 50px;
+  padding: 10px 20px;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  --color-bg: #121212;
+  --color-text-dark: #f8f8f8;
+  --color-text-light: #f8f8f8;
+  --color-overlay: rgba(0, 0, 0, 0.7);
+}
+
+/* Navbar in Dark Mode */
+body.dark-mode .navbar {
+  background-color: #1e1e1e !important;
+  transition: background-color 0.4s ease;
+}
+
+body.dark-mode .navbar .nav-link {
+  color: var(--color-text-light) !important;
+  transition: color 0.3s ease;
+}
+
+body.dark-mode .navbar .nav-link:hover {
+  color: var(--color-success) !important;
+}
+
+/* Cards in Dark Mode */
+body.dark-mode .cards .card {
+  background-color: #1c1c1c;
+  border: 1px solid #2e2e2e;
+  color: var(--color-text-light);
+  transition: background-color 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-mode .cards .card-title {
+  color: var(--color-success);
+}
+
+body.dark-mode .cards .card-text {
+  color: var(--color-text-light);
+}
+
+body.dark-mode .cards .card:hover {
+  box-shadow: 0 8px 25px rgba(0, 255, 120, 0.3);
+}
+
+/* Footer */
+.footer {
+  direction: rtl;
+  text-align: right;
+  background: linear-gradient(to right, #f8f9fa, #eef2f7);
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.footer .footer-form .input-group {
+  flex-direction: row-reverse; /* input on the right, button on the left */
+}
+
+.footer .footer-form .form-control {
+  border-radius: 0 0.5rem 0.5rem 0; /* flip */
+}
+
+.footer .footer-form .btn {
+  border-radius: 0.5rem 0 0 0.5rem; /* flip */
+}
+.footer h6 {
+  font-weight: 600;
+}
+
+.footer a {
+  text-decoration: none;
+  color: var(--primary-color);
+  transition: color 0.3s;
+}
+
+.footer a:hover {
+  color: var(--success-color);
+}
+
+.footer ul {
+  padding: 0;
+  margin: 0;
+}
+
+.footer ul li {
+  margin-bottom: 8px;
+}
+
+.footer .footer-form .form-control {
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+
+.footer .footer-form .btn {
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+/* Dark Mode for Footer */
+body.dark-mode .footer {
+  background: linear-gradient(to right, #222, #333);
+  color: #ddd;
+}
+
+body.dark-mode .footer a {
+  color: #9fd3c7;
+}
+
+body.dark-mode .footer a:hover {
+  color: var(--success-color);
+.lang-btn {
+  min-width: 50px;
+  height: 35px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+}
